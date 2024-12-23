@@ -18,6 +18,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   groups.init({
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true
+    },
     name: DataTypes.STRING,
     desc: DataTypes.STRING
   }, {

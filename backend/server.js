@@ -10,8 +10,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/api', (req, res) => {
-    res.json({ message: 'Welcome to the API!' });
+    res.json({ message: 'Welcome to my first API!' });
 });
+
+app.use('/api', userRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);

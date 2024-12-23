@@ -2,17 +2,16 @@ STEP TO REPRODUCE
 
 BACKEND
 
-1. Create .env in backend folder
+1. Copy .env.template to .env using terminal
 
-DB_USERNAME=
-DB_PASSWORD=
-DB_NAME=rest_api_db
-DB_HOST=127.0.0.1
-DB_PORT=5432
-PORT=3001
+cp .env.template .env
 
 2. npx sequelize-cli db:create
 3. npx sequelize-cli db:migrate
 4. npm run dev
 
 FRONTEND
+
+1. Copy .env.template to .env using terminal
+
+cp .env.template .env

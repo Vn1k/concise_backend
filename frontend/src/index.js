@@ -6,14 +6,16 @@ import Home from "./pages/Home";
 import User from "./pages/User";
 import Group from "./pages/Group";
 import Navbar from "./Navbar";
+import UpdateUser from "./components/users/UpdateUser";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navbar />} >
+        <Route path="/" element={<Navbar />}>
           <Route index element={<Home />} />
           <Route path="user" element={<User />} />
+          <Route path="update-user/:id" element={<UpdateUser />} />
           <Route path="group" element={<Group />} />
         </Route>
       </Routes>

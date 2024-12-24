@@ -1,13 +1,29 @@
-import { useState } from "react";
-import { createUser } from "../../api/userApi";
+import React from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { updateUserById, getUserById } from "../../api/userApi";
 
-function CreateUser() {
+function UpdateUser() {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [userData, setUserData] = useState({
     name: "",
     email: "",
     phone: "",
     address: "",
   });
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const user = await getUserById(id);
+        setUserData(user);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+    getUser();
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,25 +36,28 @@ function CreateUser() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = await createUser(userData);
-      console.log("User created", data);
+      const data = await updateUserById(id, userData);
+      console.log("User updated", data);
+      navigate("/user");
     } catch (error) {
-      console.log("Failed to create user", error);
+      console.log("Failed to update user", error);
     }
   };
 
   return (
     <div>
-      <h1>Create User</h1>
+      <h1>Update User</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Name</label>
-          <input
-            type="text"
-            name="name"
-            value={userData.name}
-            onChange={handleChange}
-          />
+          <label>
+            Name:
+            <input
+              type="text"
+              name="name"
+              value={userData.name}
+              onChange={handleChange}
+            />
+          </label>
         </div>
         <div>
           <label>
@@ -73,10 +92,10 @@ function CreateUser() {
             />
           </label>
         </div>
-        <button type="submit">Create User</button>
+        <button type="submit">Update</button>
       </form>
     </div>
   );
 }
 
-export default CreateUser;
+export default UpdateUser;

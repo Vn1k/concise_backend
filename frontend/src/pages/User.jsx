@@ -1,10 +1,12 @@
 import React from "react";
-import CreateUser from "../components/CreateUser";
+import CreateUser from "../components/users/CreateUser";
+import ListUser from "../components/users/ListUser";
 
 function User() {
   return (
     <div>
-      <CreateUser />
+      <CreateUser/>
+      <ListUser />
     </div>
   );
 }

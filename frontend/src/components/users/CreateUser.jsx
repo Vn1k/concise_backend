@@ -1,21 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
+import { createUser } from "../../api/userApi";
 
-function CreateUser() {
-  const createUser = async (userData) => {
-    return axios
-      .post(`${process.env.REACT_APP_API_URL}/user/create`, userData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
-  };
+function CreateUser({setUsers}) {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -31,13 +17,12 @@ function CreateUser() {
       address,
     };
 
-    createUser(userData)
-      .then((data) => {
-        console.log("User created", data);
-      })
-      .catch((error) => {
-        console.log("Failed to create user", error);
-      });
+    try {
+      const data = await createUser(userData);
+      console.log("User created", data);
+    } catch (error) {
+      console.log("Failed to create user", error);
+    }
   };
 
   return (

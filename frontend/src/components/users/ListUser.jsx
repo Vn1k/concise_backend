@@ -15,6 +15,15 @@ function ListUser() {
     };
     getUsers();
   }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteUserById(id);
+      setUsers(users.filter((user) => user.id !== id));
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
   return (
     <div>
       <h1>List Users</h1>
@@ -23,7 +32,7 @@ function ListUser() {
           <li key={user.id}>
             {user.name}, {user.email}, {user.phone}, {user.address}{" "}
             <Link to={`/update-user/${user.id}`}>edit</Link>{" "}
-            <button>delete</button>
+            <button onClick={() => handleDelete(user.id)}>delete</button>
           </li>
         ))}
       </ul>

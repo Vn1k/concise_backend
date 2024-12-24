@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getAllUsers } from "../../api/userApi";
+import { getAllUsers, deleteUserById } from "../../api/userApi";
 import { Link } from "react-router-dom";
 
 function ListUser() {
@@ -23,7 +23,7 @@ function ListUser() {
           <li key={user.id}>
             {user.name}, {user.email}, {user.phone}, {user.address}{" "}
             <Link to={`/update-user/${user.id}`}>edit</Link>{" "}
-            <Link to={`/delete-user/${user.id}`}>delete</Link>
+            <button>delete</button>
           </li>
         ))}
       </ul>

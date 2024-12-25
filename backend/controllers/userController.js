@@ -1,4 +1,4 @@
-const { users } = require("../models");
+const { users, userGroup, groups } = require("../models");
 
 exports.createUser = async (req, res) => {
   try {
@@ -68,3 +68,4 @@ exports.getUserById = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+

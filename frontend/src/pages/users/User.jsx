@@ -1,6 +1,6 @@
 import React from "react";
-import CreateUser from "../components/users/CreateUser";
-import ListUser from "../components/users/ListUser";
+import CreateUser from "../../components/users/CreateUser";
+import ListUser from "../../components/users/ListUser";
 
 function User() {
   return (

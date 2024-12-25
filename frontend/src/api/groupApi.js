@@ -64,3 +64,26 @@ export const deleteGroupById = async (id) => {
     console.error("Error deleting group:", error);
   }
 };
+
+export const addMemberToGroup = async (groupId, userId) => {
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_API_URL}/group/${groupId}/users/${userId}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error adding member to group:", error);
+    throw error;
+  }
+};
+
+export const removeMemberFromGroup = async (groupId, userId) => {
+  try {
+    const response = await axios.delete(
+      `${process.env.REACT_APP_API_URL}/remove-member-from-group/${groupId}/users/${userId}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error removing member from group:", error);
+  }
+};

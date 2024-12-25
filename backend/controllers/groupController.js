@@ -1,8 +1,14 @@
-const { groups } = require("../models");
+const { groups, UserGroup, users } = require("../models");
 
 exports.getAllGroups = async (req, res) => {
   try {
-    const groupsList = await groups.findAll();
+    const groupsList = await groups.findAll({
+      include: {
+        model: users,
+        attributes: ["id", 'name','email', 'phone', 'address'],
+        through: UserGroup,
+      },
+    });
     res.status(200).json(groupsList);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -12,7 +18,14 @@ exports.getAllGroups = async (req, res) => {
 exports.getGroupById = async (req, res) => {
   try {
     const { id } = req.params;
-    const group = await groups.findOne({ where: { id } });
+    const group = await groups.findOne(
+      { where: { id },
+        include: [{
+          model: users,
+          through: UserGroup,
+          attributes: ['id', 'name', 'email', 'phone', 'address']
+        }]
+      });
     if (!group) {
       return res.status(404).json({ message: "group not found" });
     }
@@ -66,5 +79,32 @@ exports.deleteGroupById = async (req, res) => {
     return res.status(204).json();
   } catch (error) {
     return res.status(500).json({ error: error.message });
+  }
+};
+
+exports.addMemberToGroup = async (req, res) => {
+  try {
+    const { groupId, userId } = req.params;
+    const newMember = await UserGroup.create({
+      user_id: userId,
+      group_id: groupId
+    });
+    res.status(201).json({ message: "User added to group", newMember });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+exports.removeMemberFromGroup = async (req, res) => {
+  try {
+    const { groupId, userId } = req.params;
+    await UserGroup.destroy({
+      where: {
+        user_id: userId,
+        group_id: groupId
+      }
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 };

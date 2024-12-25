@@ -17,10 +17,13 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Navbar />}>
           <Route index element={<Home />} />
+
+          {/* <-- User --> */}
           <Route path="user" element={<User />} />
           <Route path="update-user/:id" element={<UpdateUser />} />
           <Route path="view-user/:id" element={<ViewUser />} />
 
+          {/* <-- Group --> */}
           <Route path="group" element={<Group />} />
           <Route path="update-group/:id" element={<UpdateGroup />} />
           <Route path="view-group/:id" element={<ViewGroup />} />

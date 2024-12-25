@@ -5,7 +5,7 @@ exports.getAllGroups = async (req, res) => {
     const groupsList = await groups.findAll({
       include: {
         model: users,
-        attributes: ["id", 'name','email', 'phone', 'address'],
+        attributes: ["id", "name", "email", "phone", "address"],
         through: UserGroup,
       },
     });
@@ -18,14 +18,16 @@ exports.getAllGroups = async (req, res) => {
 exports.getGroupById = async (req, res) => {
   try {
     const { id } = req.params;
-    const group = await groups.findOne(
-      { where: { id },
-        include: [{
+    const group = await groups.findOne({
+      where: { id },
+      include: [
+        {
           model: users,
           through: UserGroup,
-          attributes: ['id', 'name', 'email', 'phone', 'address']
-        }]
-      });
+          attributes: ["id", "name", "email", "phone", "address"],
+        },
+      ],
+    });
     if (!group) {
       return res.status(404).json({ message: "group not found" });
     }
@@ -48,9 +50,9 @@ exports.createGroup = async (req, res) => {
 exports.updateGroupById = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, desc} = req.body;
+    const { name, desc } = req.body;
     const [updated] = await groups.update(
-      { name, desc},
+      { name, desc },
       {
         where: { id },
       }
@@ -87,7 +89,7 @@ exports.addMemberToGroup = async (req, res) => {
     const { groupId, userId } = req.params;
     const newMember = await UserGroup.create({
       user_id: userId,
-      group_id: groupId
+      group_id: groupId,
     });
     res.status(201).json({ message: "User added to group", newMember });
   } catch (error) {
@@ -101,10 +103,11 @@ exports.removeMemberFromGroup = async (req, res) => {
     await UserGroup.destroy({
       where: {
         user_id: userId,
-        group_id: groupId
-      }
+        group_id: groupId,
+      },
     });
+    return res.status(200).json({ message: "Member removed" });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 };

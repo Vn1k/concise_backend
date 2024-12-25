@@ -7,5 +7,6 @@ router.put("/user/update/:id", userController.updateUserById);
 router.get("/user/:id", userController.getUserById);
 router.delete("/user/delete/:id", userController.deleteUserById);
 router.get("/users", userController.getAllUsers);
+router.get("/users/:id/groups", userController.getGroupsByUserId);
 
 module.exports = router;

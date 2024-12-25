@@ -1,16 +1,16 @@
-import React from 'react'
+import React from "react";
 import { useParams } from "react-router-dom";
-import View from '../../components/users/View'
-import JoinGroup from '../../components/users/JoinGroup'
+import View from "../../components/users/View";
+import JoinGroup from "../../components/users/JoinGroup";
 
 function ViewUser() {
-    const {id: userId} = useParams();
+  const { id: userId } = useParams();
   return (
     <div>
-        <View />
-        <JoinGroup userId = {userId}/>
+      <View />
+      <JoinGroup userId={userId} />
     </div>
-  )
+  );
 }
 
-export default ViewUser 
+export default ViewUser;

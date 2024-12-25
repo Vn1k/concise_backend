@@ -1,5 +1,57 @@
 const { users, userGroup, groups } = require("../models");
 
+exports.getAllUsers = async (req, res) => {
+  try {
+    const usersList = await users.findAll({
+      include: [
+        {
+          model: groups,
+          through: userGroup,
+          attributes: ["id", "name", "desc"],
+        },
+      ],
+    });
+    res.status(200).json(usersList);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+exports.getUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await users.findOne({ where: { id } });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.getGroupsByUserId = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await users.findOne({
+      where: { id },
+      include: [
+        {
+          model: groups,
+          through: userGroup,
+          attributes: ["id", "name", "desc"],
+        },
+      ],
+    });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json(user.groups);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 exports.createUser = async (req, res) => {
   try {
     const { name, email, phone, address } = req.body;
@@ -46,26 +98,3 @@ exports.deleteUserById = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
-
-exports.getAllUsers = async (req, res) => {
-  try {
-    const usersList = await users.findAll();
-    res.status(200).json(usersList);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
-
-exports.getUserById = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const user = await users.findOne({ where: { id } });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-

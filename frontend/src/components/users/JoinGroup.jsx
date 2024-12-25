@@ -1,5 +1,4 @@
-import React, { useState, useEffect, use } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { getAllGroups, addMemberToGroup } from "../../api/groupApi";
 
 function JoinGroup({ userId }) {

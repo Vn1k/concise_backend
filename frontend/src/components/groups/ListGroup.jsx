@@ -1,9 +1,15 @@
 import { useState, useEffect } from "react";
-import { getAllGroups, deleteGroupById } from "../../api/groupApi";
-import { Link } from "react-router-dom";
+import {
+  getAllGroups,
+  deleteGroupById,
+  getGroupById,
+} from "../../api/groupApi";
+import { Link, useNavigate } from "react-router-dom";
 
 function ListGroup() {
   const [groups, setGroups] = useState([]);
+  const navigate = useNavigate();
+
   useEffect(() => {
     const getGroups = async () => {
       try {
@@ -19,7 +25,16 @@ function ListGroup() {
   const handleDelete = async (id) => {
     try {
       await deleteGroupById(id);
-      setGroups(groups.filter((group => group.id !== id)));
+      setGroups(groups.filter((group) => group.id !== id));
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  const handleView = async (id) => {
+    try {
+      await getGroupById(id);
+      navigate(`/view-group/${id}`);
     } catch (error) {
       console.log("error", error);
     }
@@ -33,6 +48,7 @@ function ListGroup() {
             {group.name}, {group.desc},{" "}
             <Link to={`/update-group/${group.id}`}>edit</Link>{" "}
             <button onClick={() => handleDelete(group.id)}>delete</button>
+            <button onClick={() => handleView(group.id, navigate)}>view</button>
           </li>
         ))}
       </ul>

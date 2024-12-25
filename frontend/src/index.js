@@ -7,6 +7,8 @@ import User from "./pages/User";
 import Group from "./pages/Group";
 import Navbar from "./Navbar";
 import UpdateUser from "./components/users/UpdateUser";
+import UpdateGroup from "./components/groups/UpdateGroup";
+import ViewUser from "./components/users/ViewUser";
 
 export default function App() {
   return (
@@ -16,7 +18,10 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path="user" element={<User />} />
           <Route path="update-user/:id" element={<UpdateUser />} />
+          <Route path="/view-user/:id" element={<ViewUser />} />
+
           <Route path="group" element={<Group />} />
+          <Route path="update-group/:id" element={<UpdateGroup />} />
         </Route>
       </Routes>
     </BrowserRouter>

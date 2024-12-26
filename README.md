@@ -29,5 +29,5 @@ cp .env.template .env
 
 INFORMATION
 
-untuk melihat data json secara lengkap di backend dapat melihat pada localhost:{sesuai port di .env} dengan /api/users, /api/groups, /api/task. 
-dan dapat melihat secara manual dengan endpoint yang sesuai pada groupRoutes, userRoutes, taskRoutes. dengan menggunakan id bertipe uuid.
+untuk melihat data json secara lengkap di backend dapat melihat pada localhost:{sesuai port di .env} dengan /api/users, /api/groups, /api/task.
+dan dapat melihat secara manual dengan endpoint yang sesuai pada groupRoutes, userRoutes, taskRoutes. dengan menggunakan id bertipe uuid. atau melalui frontend UI sebagai alternatif.

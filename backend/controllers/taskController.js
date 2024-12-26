@@ -7,11 +7,11 @@ exports.createTask = async (req, res) => {
     if (!name || !deadline) {
       return res.status(400).json({ error: "Name and deadline required" });
     }
-    
+
     const newTask = await task.create({
       name,
       deadline,
-      user_id: user_id || null
+      user_id: user_id || null,
     });
 
     res.status(201).json(newTask);
@@ -24,13 +24,12 @@ exports.updateTask = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, deadline, user_id } = req.body;
-    
+
     const taskToUpdate = await task.findByPk(id);
     if (!taskToUpdate) {
-      return res.status(404).json({ message: 'Task tidak ditemukan' });
+      return res.status(404).json({ message: "Task tidak ditemukan" });
     }
 
-    // Only update fields that are provided
     const updateData = {};
     if (name) updateData.name = name;
     if (deadline) updateData.deadline = deadline;
@@ -38,12 +37,14 @@ exports.updateTask = async (req, res) => {
 
     await taskToUpdate.update(updateData);
 
-    const updatedTask = await task.findOne({ 
+    const updatedTask = await task.findOne({
       where: { id },
-      include: [{
-        model: users,
-        attributes: ["id", "name", "email", "phone", "address"]
-      }]
+      include: [
+        {
+          model: users,
+          attributes: ["id", "name", "email", "phone", "address"],
+        },
+      ],
     });
 
     res.status(200).json(updatedTask);
@@ -56,13 +57,13 @@ exports.deleteTask = async (req, res) => {
   try {
     const { id } = req.params;
     const taskToDelete = await task.findByPk(id);
-    
+
     if (!taskToDelete) {
-      return res.status(404).json({ message: 'Task tidak ditemukan' });
+      return res.status(404).json({ message: "Task tidak ditemukan" });
     }
 
     await taskToDelete.destroy();
-    res.status(200).json({ message: 'Task berhasil dihapus' });
+    res.status(200).json({ message: "Task berhasil dihapus" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -87,20 +88,22 @@ exports.getAllTasks = async (req, res) => {
 exports.getTaskById = async (req, res) => {
   try {
     const { id } = req.params;
-    const taskData = await task.findOne({ 
+    const taskData = await task.findOne({
       where: { id },
-      include: [{
-        model: users,
-        attributes: ["id", "name", "email", "phone", "address"]
-      }],
+      include: [
+        {
+          model: users,
+          attributes: ["id", "name", "email", "phone", "address"],
+        },
+      ],
       raw: false,
-      nest: true
+      nest: true,
     });
 
     if (!taskData) {
       return res.status(404).json({ message: "Task tidak ditemukan" });
     }
-    
+
     res.status(200).json(taskData);
   } catch (error) {
     res.status(500).json({ error: error.message });

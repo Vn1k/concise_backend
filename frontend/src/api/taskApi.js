@@ -9,7 +9,7 @@ export const createTask = async (taskData) => {
 
     const response = await axios.post(
       `${process.env.REACT_APP_API_URL}/task/create`,
-      taskData, payload,
+      payload,
       {
         headers: {
           "Content-Type": "application/json",

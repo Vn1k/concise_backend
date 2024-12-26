@@ -2,6 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getTaskById } from "../../api/taskApi";
+import ListUserByTask from "./ListUserByTask";
 
 function View() {
   const { id } = useParams();
@@ -37,6 +38,7 @@ function View() {
           {taskData.deadline}
         </label>
       </div>
+      <ListUserByTask id={id} />
     </div>
   );
 }

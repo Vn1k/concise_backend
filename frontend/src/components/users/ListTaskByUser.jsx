@@ -8,11 +8,7 @@ function ListTaskByUser({ id }) {
     const getTasks = async () => {
       try {
         const taskData = await getTasksByUserId(id);
-        if (Array.isArray(taskData)) {
-          setTasks(taskData);
-        } else {
-          console.log("Unexpected data format", taskData);
-        }
+        setTasks(taskData || []);
       } catch (error) {
         console.log("error", error);
       }
@@ -26,7 +22,7 @@ function ListTaskByUser({ id }) {
       <ul>
         {tasks.map((task) => (
           <li key={task.id}>
-            {task.name}, {task.deadline}
+            <strong>{task.name}</strong> - Deadline: {task.deadline}
           </li>
         ))}
       </ul>

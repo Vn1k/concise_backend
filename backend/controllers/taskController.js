@@ -92,12 +92,15 @@ exports.getTaskById = async (req, res) => {
       include: [{
         model: users,
         attributes: ["id", "name", "email", "phone", "address"]
-      }]
+      }],
+      raw: false,
+      nest: true
     });
 
     if (!taskData) {
       return res.status(404).json({ message: "Task tidak ditemukan" });
     }
+    
     res.status(200).json(taskData);
   } catch (error) {
     res.status(500).json({ error: error.message });

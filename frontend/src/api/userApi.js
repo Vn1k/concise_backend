@@ -75,3 +75,14 @@ export const getGroupsByUserId = async (id) => {
     console.error("Error fetching groups:", error);
   }
 };
+
+export const getTasksByUserId = async (id) => {
+  try {
+    const response = await axios.get(
+    `${process.env.REACT_APP_API_URL}/users/${id}/tasks`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching tasks:", error);
+  }
+};

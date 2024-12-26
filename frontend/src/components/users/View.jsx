@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
 import { getUserById } from "../../api/userApi";
 import ListGroupByUser from "./ListGroupByUser";
+import ListTaskByUser from "./ListTaskByUser";
 
 function View() {
   const { id } = useParams();
@@ -53,6 +53,7 @@ function View() {
         </label>
       </div>
       <ListGroupByUser id={id} />
+      <ListTaskByUser id={id} />
     </div>
   );
 }

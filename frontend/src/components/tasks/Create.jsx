@@ -37,17 +37,12 @@ function Create() {
     setSelectedUser(userId);
     setTaskData({
       ...taskData,
-      user_id: userId,
+      user_id: userId || null,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!taskData.user_id) {
-      alert("Please select a user for this task");
-      return;
-    }
 
     try {
       const data = await createTask(taskData);
@@ -60,6 +55,7 @@ function Create() {
       setSelectedUser("");
     } catch (error) {
       console.log("Failed to create Task", error);
+      alert("Task name already exists");
     }
   };
 
@@ -93,7 +89,6 @@ function Create() {
             name="user_id"
             value={selectedUser}
             onChange={handleUserSelect}
-            required
           >
             <option value="">Select User</option>
             {users.map((user) => (

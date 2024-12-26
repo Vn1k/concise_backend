@@ -11,6 +11,9 @@ import UpdateGroup from "./components/groups/UpdateGroup";
 import ViewUser from "./pages/users/ViewUser";
 import ViewGroup from "./pages/groups/ViewGroup";
 import Task from "./pages/tasks/Task";
+import UpdateTask from "./components/tasks/Update";
+import ViewTask from "./pages/tasks/ViewTask";
+
 
 export default function App() {
   return (
@@ -31,6 +34,8 @@ export default function App() {
 
           {/* <-- Task --> */}
           <Route path="task" element={<Task />} />
+          <Route path="update-task/:id" element={<UpdateTask />} />
+          <Route path="view-task/:id" element={<ViewTask/>} />
         </Route>
       </Routes>
     </BrowserRouter>

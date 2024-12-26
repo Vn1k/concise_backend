@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       task.belongsTo(models.users, {
         foreignKey: "user_id",
         onDelete: "CASCADE",
+        allowNull: true,
       });
     }
   }
@@ -27,7 +28,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       deadline: DataTypes.DATE,
-      user_id: DataTypes.UUID,
+      user_id: {
+        type: DataTypes.UUID,
+        allowNull: true,
+      },
     },
     {
       sequelize,

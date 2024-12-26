@@ -1,4 +1,4 @@
-const { users, userGroup, groups } = require("../models");
+const { users, userGroup, groups, task } = require("../models");
 
 exports.getAllUsers = async (req, res) => {
   try {
@@ -9,6 +9,10 @@ exports.getAllUsers = async (req, res) => {
           through: userGroup,
           attributes: ["id", "name", "desc"],
         },
+        {
+          model: task,
+          attributes: ["id","name", "deadline", "user_id"]
+        }
       ],
     });
     res.status(200).json(usersList);
@@ -96,5 +100,26 @@ exports.deleteUserById = async (req, res) => {
     return res.status(204).json();
   } catch (error) {
     return res.status(500).json({ error: error.message });
+  }
+};
+
+exports.getTasksByUserId = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await users.findOne({
+      where: { id },
+      include: [
+        {
+          model: task,
+          attributes: ["id", "name", "deadline"],
+        },
+      ],
+    });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json(user.groups);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };

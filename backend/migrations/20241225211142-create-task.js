@@ -12,6 +12,7 @@ module.exports = {
       name: {
         type: Sequelize.STRING(50),
         allowNull: false,
+        unique: true,
       },
       deadline: {
         type: Sequelize.DATE,

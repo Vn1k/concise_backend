@@ -10,6 +10,7 @@ import UpdateUser from "./components/users/UpdateUser";
 import UpdateGroup from "./components/groups/UpdateGroup";
 import ViewUser from "./pages/users/ViewUser";
 import ViewGroup from "./pages/groups/ViewGroup";
+import Task from "./pages/tasks/Task";
 
 export default function App() {
   return (
@@ -27,6 +28,9 @@ export default function App() {
           <Route path="group" element={<Group />} />
           <Route path="update-group/:id" element={<UpdateGroup />} />
           <Route path="view-group/:id" element={<ViewGroup />} />
+
+          {/* <-- Task --> */}
+          <Route path="task" element={<Task />} />
         </Route>
       </Routes>
     </BrowserRouter>

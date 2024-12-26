@@ -21,7 +21,11 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
-      name: DataTypes.STRING(50),
+      name: {
+        type: DataTypes.STRING(50),
+        unique: true,
+        allowNull: false,
+      },
       deadline: DataTypes.DATE,
       user_id: DataTypes.UUID,
     },
